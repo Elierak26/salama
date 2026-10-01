@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Salama — Interfaces médecin</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E%3Crect width=%2748%27 height=%2748%27 rx=%2714%27 fill=%27%230B7A75%27/%3E%3Cg transform=%27translate(6 6) scale(.18)%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%2714%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M30 80A72 72 0 1 1 30 128%27/%3E%3Cpolyline points=%278,104 66,104 78,74 96,136 112,60 124,104 150,104%27/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#123537; --emerald:#0B7A75; --emerald-d:#075955; --emerald-l:#E3F3F1;
+  --sand:#F1F7F6; --sand-d:#E6EFEE; --card:#FFFFFF;
+  --muted:#5E6B6A; --line:rgba(18,51,53,.10); --line-2:rgba(18,51,53,.16);
+  --amber:#B9791A; --amber-bg:#FBEFD8;
+  --danger:#B23B34; --danger-bg:#FBE6E3;
+  --success:#127A56; --success-bg:#E3F3EC;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--sand); color:var(--ink); font-family:"Inter",system-ui,sans-serif; font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px; margin:0 auto; padding:0 24px 72px}
+.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;flex:none}
+
+.hero{position:relative; overflow:hidden; margin:32px 0 12px; background:linear-gradient(135deg,#0A4F4B 0%,#0B7A75 58%,#1E9C93 100%); border-radius:22px; padding:34px 36px; color:#E9F5F3; box-shadow:0 26px 54px -28px rgba(10,79,75,.5)}
+.hero-top{display:flex; align-items:center; gap:13px}
+.brandname{font-family:"Fraunces",serif; font-weight:600; font-size:22px; color:#fff}
+.brandsub{font-size:12px; color:#B6E2DC}
+.hero h1{font-family:"Fraunces",serif; font-weight:500; font-size:30px; margin:18px 0 6px; color:#fff; letter-spacing:-.01em}
+.hero p{margin:0; color:#CDEBE7; max-width:60ch}
+
+.sec{margin:40px 0 16px}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--emerald-d)}
+.eyebrow .num{display:inline-flex; width:22px; height:22px; align-items:center; justify-content:center; background:var(--emerald-l); color:var(--emerald-d); border-radius:7px; font-family:"Fraunces",serif; font-size:12px}
+.sec h2{font-family:"Fraunces",serif; font-weight:500; font-size:22px; margin:10px 0 4px}
+.sec p.lede{margin:0; color:var(--muted); max-width:64ch; font-size:14px}
+
+.browser{border-radius:14px; overflow:hidden; box-shadow:0 30px 64px -34px rgba(12,42,37,.42), 0 6px 16px -12px rgba(0,0,0,.16); border:1px solid var(--line); background:#fff}
+.chrome{background:#EAE5DA00; background:#E7EFEE; display:flex; align-items:center; gap:12px; padding:11px 14px; border-bottom:1px solid var(--line)}
+.lights{display:flex; gap:6px} .lights i{width:11px;height:11px;border-radius:50%;display:block}
+.url{flex:1; background:#fff; border-radius:7px; padding:6px 12px; font-size:12px; color:var(--muted); display:flex; align-items:center; gap:8px; max-width:380px}
+.url .ic{width:13px;height:13px;stroke-width:2;color:var(--emerald-d)}
+.caption{font-size:13px; color:var(--muted); margin:12px 2px 0}
+.caption b{color:var(--ink); font-weight:600}
+
+/* Centered auth screens */
+.auth{min-height:340px; display:flex; align-items:center; justify-content:center; padding:34px; background:radial-gradient(120% 90% at 50% 0%,#F2F9F8,#fff 60%)}
+.authcard{width:340px; text-align:center}
+.authcard .logo{margin-bottom:16px}
+.authcard h3{font-family:"Fraunces",serif; font-weight:500; font-size:22px; margin:0 0 4px}
+.authcard .sub{color:var(--muted); font-size:13px; margin:0 0 22px}
+.field{text-align:left; margin-bottom:12px}
+.field label{display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:5px}
+.field input,.field textarea{width:100%; font-family:inherit; font-size:14px; color:var(--ink); border:1px solid var(--line-2); border-radius:9px; padding:10px 12px; background:#fff}
+.btn{background:var(--emerald); color:#fff; border-radius:10px; padding:12px; text-align:center; font-weight:600; box-shadow:0 12px 22px -12px rgba(11,122,117,.6)}
+.btn.full{width:100%}
+.note{font-size:12px; color:var(--muted); margin-top:14px; display:flex; align-items:center; gap:7px; justify-content:center}
+.note .ic{width:15px;height:15px;stroke-width:2}
+.codeboxes{display:flex; gap:8px; justify-content:center; margin-bottom:20px}
+.codeboxes span{width:42px;height:52px;border:1px solid var(--line-2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:500;font-family:"Fraunces",serif;color:var(--ink)}
+.codeboxes span.on{border-color:var(--emerald);box-shadow:0 0 0 3px var(--emerald-l)}
+
+/* Doctor app shell */
+.appnav{display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1px solid var(--line)}
+.appnav .left{display:flex; align-items:center; gap:20px}
+.appnav .brand{display:flex; align-items:center; gap:9px; font-family:"Fraunces",serif; font-weight:600; font-size:16px}
+.appnav .tabs{display:flex; gap:16px; font-size:13px}
+.appnav .tabs a{color:var(--muted); text-decoration:none}
+.appnav .tabs a.on{color:var(--ink); font-weight:600}
+.appnav .doc{display:flex; align-items:center; gap:9px; font-size:13px}
+.appnav .doc .av{width:32px;height:32px;border-radius:50%;background:var(--emerald-l);display:flex;align-items:center;justify-content:center;color:var(--emerald-d);font-weight:500;font-size:12px}
+
+/* Empty state (home) */
+.empty{padding:46px 24px; text-align:center}
+.empty .circle{width:76px;height:76px;border-radius:50%;background:var(--emerald-l);display:flex;align-items:center;justify-content:center;color:var(--emerald-d);margin:0 auto 16px}
+.empty .circle .ic{width:36px;height:36px;stroke-width:1.6}
+.empty h3{font-family:"Fraunces",serif; font-weight:500; font-size:20px; margin:0 0 6px}
+.empty p{margin:0 auto 20px; color:var(--muted); max-width:40ch}
+.empty .scanbtn{display:inline-flex; align-items:center; gap:9px; background:var(--emerald); color:#fff; border-radius:11px; padding:13px 22px; font-weight:600; box-shadow:0 12px 22px -12px rgba(11,122,117,.6)}
+.rulechip{display:inline-flex; align-items:center; gap:8px; margin-top:20px; background:var(--sand); border:1px solid var(--line); color:var(--muted); font-size:12px; padding:8px 14px; border-radius:100px}
+.rulechip .ic{width:15px;height:15px;stroke-width:2;color:var(--emerald-d)}
+.todaywrap{border-top:1px solid var(--line); padding:16px 20px}
+.todaywrap .th{font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin:0 0 10px}
+.today{display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line); font-size:13px}
+.today .r{color:var(--muted); font-size:12px}
+
+/* Scan */
+.scan{padding:26px; text-align:center; background:#0C1B1C}
+.viewport{width:260px;height:260px;margin:0 auto;border-radius:16px;position:relative;background:linear-gradient(135deg,#122B2D,#0C1B1C);overflow:hidden}
+.viewport .corner{position:absolute;width:34px;height:34px;border:3px solid #6CCBC1}
+.viewport .c1{top:16px;left:16px;border-right:none;border-bottom:none;border-radius:8px 0 0 0}
+.viewport .c2{top:16px;right:16px;border-left:none;border-bottom:none;border-radius:0 8px 0 0}
+.viewport .c3{bottom:16px;left:16px;border-right:none;border-top:none;border-radius:0 0 0 8px}
+.viewport .c4{bottom:16px;right:16px;border-left:none;border-top:none;border-radius:0 0 8px 0}
+.viewport .qhint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#3E5F5C}
+.viewport .qhint .ic{width:80px;height:80px;stroke-width:1.4}
+.scan p{color:#CFE6E3; margin:18px 0 16px; font-size:14px}
+.scan .cancel{display:inline-block; border:1px solid rgba(255,255,255,.25); color:#E9F5F3; border-radius:10px; padding:11px 22px; font-weight:500}
+
+/* Consultation (dossier + saisie) */
+.dhead{display:flex; align-items:center; justify-content:space-between; padding:15px 20px; border-bottom:1px solid var(--line); flex-wrap:wrap; gap:10px}
+.dhead .who{display:flex; align-items:center; gap:12px}
+.dhead .who .av{width:40px;height:40px;border-radius:50%;background:var(--emerald-l);display:flex;align-items:center;justify-content:center;color:var(--emerald-d);font-weight:500}
+.dhead .p-name{font-family:"Fraunces",serif; font-weight:500; font-size:18px}
+.dhead .p-sub{font-size:12px; color:var(--muted); margin-top:1px}
+.enc-status{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--success); background:var(--success-bg); padding:6px 12px; border-radius:100px}
+.enc-status .ic{width:15px;height:15px;stroke-width:2.2}
+.grant{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:500; color:var(--emerald-d); background:var(--emerald-l); padding:6px 12px; border-radius:100px}
+.grant .ic{width:15px;height:15px;stroke-width:2.2}
+.dgrid{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.dcol-l{padding:18px 20px; border-right:1px solid var(--line)}
+.dcol-r{padding:18px 20px; background:var(--sand)}
+.dsearch{display:flex; align-items:center; gap:8px; border:1px solid var(--line-2); border-radius:10px; padding:9px 12px; margin-bottom:6px; color:var(--muted); font-size:13px}
+.dsearch .ic{width:16px;height:16px;stroke-width:2}
+.dsearch-note{margin:0 0 14px; font-size:11px; color:var(--muted)}
+.vitals{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px}
+.vital{font-size:12px; font-weight:500; padding:6px 11px; border-radius:8px; display:inline-flex; align-items:center; gap:6px}
+.vital .ic{width:14px;height:14px;stroke-width:2}
+.vital.d{background:var(--danger-bg); color:var(--danger)}
+.vital.n{background:#fff; border:1px solid var(--line); color:var(--ink)} .vital.n .ic{color:var(--emerald)}
+.tl-title{font-size:12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin:0 0 10px}
+.visit{border:1px solid var(--line); border-radius:10px; padding:11px 13px; margin-bottom:8px; background:#fff}
+.visit .vh{display:flex; justify-content:space-between; align-items:center}
+.visit .vh .vd{font-weight:500} .visit .vh .vm{font-size:12px; color:var(--muted)}
+.visit .vl{margin-top:6px; display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--muted)}
+.visit .vl .ic{width:14px;height:14px;stroke-width:2; vertical-align:-2px}
+.addhead{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+.addhead .t{font-weight:500} .addhead .t .ic{width:15px;height:15px;stroke-width:2; color:var(--emerald); vertical-align:-2px}
+.addhead .dup{font-size:12px; color:var(--emerald)} .addhead .dup .ic{width:14px;height:14px;stroke-width:2; vertical-align:-2px}
+.types{display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap}
+.type{font-size:12px; padding:7px 12px; border-radius:8px}
+.type.on{font-weight:500; color:#fff; background:var(--emerald)}
+.type.off{color:var(--muted); background:#fff; border:1px solid var(--line)}
+.suggest{background:#fff; border:1px solid var(--line); border-radius:8px; margin:-2px 0 12px; overflow:hidden}
+.suggest .sh{margin:0; padding:5px 11px; font-size:11px; color:var(--muted); border-bottom:1px solid var(--line)}
+.suggest .si{padding:7px 11px; font-size:13px}
+.added{background:var(--success-bg); border-radius:8px; padding:9px 12px; margin-bottom:12px}
+.added p{margin:0}
+.added .ah{font-size:11px; font-weight:600; color:var(--success); margin-bottom:4px}
+.added .ai{font-size:13px; color:var(--success)} .added .ai .ic{width:14px;height:14px;stroke-width:2.5; vertical-align:-2px}
+.dactions{display:flex; gap:8px}
+.dactions .save{flex:1; background:var(--emerald); color:#fff; border-radius:9px; padding:12px; text-align:center; font-weight:600}
+.close-btn{border:1px solid var(--line-2); border-radius:9px; padding:12px 16px; text-align:center; color:var(--ink); font-weight:500}
+
+/* Préférences (DoctorSuggestion) */
+.pref{padding:18px 20px}
+.pref h3{font-family:"Fraunces",serif; font-weight:500; font-size:19px; margin:0 0 3px}
+.pref .psub{color:var(--muted); font-size:13px; margin:0 0 18px}
+.pref .cats{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px}
+.pref .cat{font-size:12px; padding:7px 12px; border-radius:8px}
+.pref .cat.on{color:#fff; background:var(--emerald); font-weight:500}
+.pref .cat.off{color:var(--muted); background:#fff; border:1px solid var(--line)}
+.addrow{display:flex; gap:8px; margin-bottom:16px}
+.addrow input{flex:1; font-family:inherit; font-size:14px; border:1px solid var(--line-2); border-radius:9px; padding:10px 12px; background:#fff; color:var(--ink)}
+.addrow .add{background:var(--emerald); color:#fff; border-radius:9px; padding:0 18px; display:flex; align-items:center; font-weight:600}
+.srow{display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-top:1px solid var(--line)}
+.srow .lbl{font-weight:500}
+.srow .right{display:flex; align-items:center; gap:10px}
+.badge{font-size:11px; font-weight:600; padding:4px 9px; border-radius:100px}
+.badge.sys{background:var(--emerald-l); color:var(--emerald-d)}
+.badge.perso{background:var(--sand-d); color:var(--ink)}
+.badge.learn{background:var(--amber-bg); color:var(--amber)}
+.toggle{width:36px;height:20px;border-radius:100px;background:var(--emerald);position:relative;flex:none}
+.toggle::after{content:"";position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff}
+.toggle.off{background:var(--line-2)} .toggle.off::after{left:2px;right:auto}
+
+/* Clôture */
+.done{padding:44px 24px; text-align:center}
+.done .circle{width:70px;height:70px;border-radius:50%;background:var(--success-bg);display:flex;align-items:center;justify-content:center;color:var(--success);margin:0 auto 16px}
+.done .circle .ic{width:34px;height:34px;stroke-width:2}
+.done h3{font-family:"Fraunces",serif; font-weight:500; font-size:20px; margin:0 0 6px}
+.done p{margin:0 auto 18px; color:var(--muted); max-width:42ch}
+.summary{max-width:360px; margin:0 auto 20px; text-align:left; border:1px solid var(--line); border-radius:10px; overflow:hidden}
+.summary .sr{display:flex; align-items:center; gap:9px; padding:10px 14px; border-top:1px solid var(--line); font-size:13px}
+.summary .sr:first-child{border-top:none}
+.summary .sr .ic{width:15px;height:15px;stroke-width:2;color:var(--emerald-d)}
+
+.footer{margin-top:52px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; display:flex; align-items:center; gap:8px}
+.footer .ic{width:15px;height:15px;stroke-width:2}
+
+@media (max-width:720px){ .dgrid{grid-template-columns:1fr} .dcol-l{border-right:none;border-bottom:1px solid var(--line)} .hero h1{font-size:24px} }
+@media print{ body{background:#fff} .browser,.hero{box-shadow:none} .sec{break-inside:avoid} .browser{break-inside:avoid} }
+
+/* --- Responsive renforcé (mobile médecin) --- */
+@media (max-width:720px){
+  .dhead{flex-wrap:wrap; gap:10px}
+  .who{min-width:0}
+  .p-name,.p-sub{overflow-wrap:anywhere}
+  .types,.cats,.vitals,.tabs,.dactions,.addrow,.summary{flex-wrap:wrap}
+  .addrow input{min-width:0; flex:1 1 180px}
+  .srow{flex-wrap:wrap; gap:6px}
+  .appnav{flex-wrap:wrap; gap:8px 12px}
+  .appnav .left{flex-wrap:wrap; gap:8px 12px}
+  .chrome .url{max-width:60vw; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .today{flex-wrap:wrap; gap:2px}
+  .vh{flex-wrap:wrap; gap:2px 8px}
+  .vl{flex-wrap:wrap; gap:4px 10px}
+  .rulechip,.dsearch-note{display:inline-block; line-height:1.45}
+  .codeboxes{gap:6px}
+  .codeboxes span{width:34px; height:42px; font-size:17px}
+  .caption{font-size:13px}
+}
+@media (max-width:420px){
+  .authcard{padding:22px 18px}
+  .browser{border-radius:12px}
+  .hero h1{font-size:21px}
+  .viewport{max-width:100%}
+}
+html,body{overflow-x:hidden}
+img,svg{max-width:100%}
+input,textarea{max-width:100%; box-sizing:border-box}
+
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E9C93"/><stop offset="1" stop-color="#075955"/></linearGradient></defs>
+  <symbol id="logo" viewBox="0 0 48 48"><rect width="48" height="48" rx="14" fill="#0B7A75"/><g transform="translate(6 6) scale(.18)" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"><path d="M30 80A72 72 0 1 1 30 128"/><polyline points="8,104 66,104 78,74 96,136 112,60 124,104 150,104"/></g></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M17 6l2 2M14 9l2 2"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M7 12h10"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M20.5 14v.02M14 20.5v.02M20.5 20.5v.02M17 17v3.5h3.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 15H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3"/><path d="M12 9v6"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6 3h3l2 5-2 1a11 11 0 0 0 5 5l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></symbol>
+  <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="14" cy="18" r="2"/></symbol>
+  <symbol id="i-eyeoff" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.4 5.2A9 9 0 0 1 21 12a12 12 0 0 1-2.2 3M6.2 6.2A12 12 0 0 0 3 12a9 9 0 0 0 12 6"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-top">
+      <svg width="44" height="44"><use href="#logo"/></svg>
+      <div><div class="brandname">Salama</div><div class="brandsub">Espace médecin · web</div></div>
+    </div>
+    <h1>Les écrans côté médecin</h1>
+    <p>Le parcours complet, de la connexion à la clôture d'une consultation. Support de présentation pour recueillir vos retours avant le développement.</p>
+  </div>
+
+  <!-- 1. Connexion -->
+  <div class="sec"><span class="eyebrow"><span class="num">1</span> Connexion</span><h2>Se connecter</h2><p class="lede">Le compte est créé par l'administrateur ; le médecin ne s'inscrit pas lui-même.</p></div>
+  <div class="browser">
+    <div class="chrome"><div class="lights"><i style="background:#F0645C"></i><i style="background:#F5BE4F"></i><i style="background:#5BC466"></i></div><div class="url"><svg class="ic"><use href="#i-lock"/></svg> salama.mg/medecin</div></div>
+    <div class="auth"><div class="authcard">
+      <div class="logo"><svg width="52" height="52"><use href="#logo"/></svg></div>
+      <h3>Espace médecin</h3>
+      <p class="sub">Accédez aux dossiers partagés par vos patients</p>
+      <div class="field"><label>Adresse e-mail</label><input type="text" value="dr.rakoto@cabinet-analakely.mg" /></div>
+      <div class="field"><label>Mot de passe</label><input type="password" value="••••••••••" /></div>
+      <div class="btn full">Se connecter</div>
+      <div class="note"><svg class="ic"><use href="#i-shield"/></svg> Compte créé par votre administrateur</div>
+    </div></div>
+  </div>
+  <p class="caption"><b>Connexion.</b> Pas d'auto-inscription — sécurité : aucun faux compte médecin.</p>
+
+  <!-- 2. 2FA -->
+  <div class="sec"><span class="eyebrow"><span class="num">2</span> Double authentification</span><h2>Vérification en deux étapes</h2><p class="lede">Une couche de plus, car un compte médecin donne accès à des données sensibles.</p></div>
+  <div class="browser">
+    <div class="chrome"><div class="lights"><i style="background:#F0645C"></i><i style="background:#F5BE4F"></i><i style="background:#5BC466"></i></div><div class="url"><svg class="ic"><use href="#i-lock"/></svg> salama.mg/medecin/2fa</div></div>
+    <div class="auth"><div class="authcard">
+      <div class="logo"><svg width="48" height="48"><use href="#i-key" style="color:var(--emerald)"/></svg></div>
+      <h3>Vérification en deux étapes</h3>
+      <p class="sub">Saisissez le code de votre application d'authentification</p>
+      <div class="codeboxes"><span class="on">4</span><span>1</span><span>9</span><span>2</span><span>0</span><span>7</span></div>
+      <div class="btn full">Vérifier</div>
+      <div class="note"><svg class="ic"><use href="#i-shield"/></svg> Code renouvelé toutes les 30 secondes</div>
+    </div></div>
+  </div>
+  <p class="caption"><b>2FA.</b> Obligatoire à chaque connexion.</p>
+
+  <!-- 3. Accueil -->
+  <div class="sec"><span class="eyebrow"><span class="num">3</span> Accueil</span><h2>Aucun dossier ouvert</h2><p class="lede">Le médecin garde son carnet de cabinet ; le dossier partagé du patient ne s'ouvre qu'en scannant son QR.</p></div>
+  <div class="browser">
+    <div class="chrome"><div class="lights"><i style="background:#F0645C"></i><i style="background:#F5BE4F"></i><i style="background:#5BC466"></i></div><div class="url"><svg class="ic"><use href="#i-lock"/></svg> salama.mg/medecin</div></div>
+    <div class="appnav">
+      <div class="left"><div class="brand"><svg width="26" height="26"><use href="#logo"/></svg> Salama</div>
+        <div class="tabs"><a class="on">Consultations</a><a>Mes préférences</a></div></div>
+      <div class="doc"><span>Dr Rakoto</span><div class="av">DR</div></div>
+    </div>
+    <div class="empty">
+      <div class="circle"><svg class="ic"><use href="#i-scan"/></svg></div>
+      <h3>Aucun dossier ouvert</h3>
+      <p>Scannez le code de partage du patient pour ouvrir son dossier et démarrer une consultation.</p>
+      <div class="scanbtn"><svg class="ic"><use href="#i-qr"/></svg> Scanner un patient</div>
+      <div><span class="rulechip"><svg class="ic"><use href="#i-search"/></svg> Vos patients restent dans votre cabinet — le dossier partagé s'ajoute par-dessus.</span></div>
+    </div>
+    <div class="todaywrap">
+      <p class="th">Consultations du jour</p>
+      <div class="today"><span>Voahangy R. · contrôle tension</span><span class="r">clôturée · 14:05</span></div>
+      <div class="today"><span>Miora A. · renouvellement</span><span class="r">clôturée · 11:20</span></div>
+    </div>
+  </div>
+  <p class="caption"><b>Accueil.</b> L'écran matérialise la règle : pas de recherche libre de patients.</p>
+
+  <!-- 4. Scan -->
+  <div class="sec"><span class="eyebrow"><span class="num">4</span> Scan</span><h2>Scanner le patient</h2><p class="lede">Le patient affiche son QR ; le médecin le scanne pour ouvrir le dossier.</p></div>
+  <div class="browser">
+    <div class="chrome"><div class="lights"><i style="background:#F0645C"></i><i style="background:#F5BE4F"></i><i style="background:#5BC466"></i></div><div class="url"><svg class="ic"><use href="#i-lock"/></svg> salama.mg/medecin/scan</div></div>
+    <div class="scan">
+      <div class="viewport">
+        <div class="qhint"><svg class="ic"><use href="#i-qr"/></svg></div>
+        <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+      </div>
+      <p>Demandez au patient d'afficher son code de partage</p>
+      <span class="cancel">Annuler</span>
+    </div>
+  </div>
+  <p class="caption"><b>Scan.</b> Accès accordé par le patient, pour cette consultation seulement.</p>
+
+  <!-- 5. Consultation -->
+  <div class="sec"><span class="eyebrow"><span class="num">5</span> Consultation</span><h2>Une consultation ouverte</h2><p class="lede">Dossier et résumé vital à gauche ; on ajoute des éléments par type, puis on clôture.</p></div>
+  <div class="browser">
+    <div class="chrome"><div class="lights"><i style="background:#F0645C"></i><i style="background:#F5BE4F"></i><i style="background:#5BC466"></i></div><div class="url"><svg class="ic"><use href="#i-lock"/></svg> salama.mg/medecin/consultation</div></div>
+    <div class="dhead">
+      <div class="who"><div class="av">VR</div><div><div class="p-name">Voahangy Rakotobe · 43 ans</div><div class="p-sub">Cabinet Analakely · Dr Rakoto</div></div></div>
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap"><span class="enc-status"><svg class="ic"><use href="#i-dot"/></svg> Consultation ouverte</span><span class="grant"><svg class="ic"><use href="#i-shield"/></svg> accès accordé</span></div>
+    </div>
+    <div class="dgrid">
+      <div class="dcol-l">
+        <div class="dsearch"><svg class="ic"><use href="#i-search"/></svg> Rechercher dans ce dossier</div>
+        <p class="dsearch-note">Recherche limitée au dossier ouvert — jamais à travers les patients.</p>
+        <div class="vitals">
+          <span class="vital d"><svg class="ic"><use href="#i-alert"/></svg> Allergie : Pénicilline</span>
+          <span class="vital n"><svg class="ic"><use href="#i-pill"/></svg> Amlodipine 5 mg</span>
+          <span class="vital n"><svg class="ic"><use href="#i-activity"/></svg> Hypertension</span>
+          <span class="vital n"><svg class="ic"><use href="#i-phone"/></svg> Urgence : Naïna R.</span>
+        </div>
+        <div class="tl-title">Historique par visite</div>
+        <div class="visit"><div class="vh"><span class="vd">12 juin 2026</span><span class="vm">Dr Rakoto · Cabinet Analakely</span></div><div class="vl"><span><svg class="ic"><use href="#i-note"/></svg> Note : hypertension · TA 150/95</span><span><svg class="ic"><use href="#i-pill"/></svg> Prescription : Amlodipine 5 mg</span></div></div>
+        <div class="visit"><div class="vh"><span class="vd">3 mars 2026</span><span class="vm">Dr Andria</span></div><div class="vl"><span><svg class="ic"><use href="#i-note"/></svg> Note : grippe saisonnière</span></div></div>
+      </div>
+      <div class="dcol-r">
+        <div class="addhead"><span class="t"><svg class="ic"><use href="#i-plus"/></svg> Ajouter à cette consultation</span><span class="dup"><svg class="ic"><use href="#i-copy"/></svg> Dupliquer la dernière</span></div>
+        <div class="types"><span class="type on">Note clinique</span><span class="type off">Prescription</span><span class="type off">Mesure</span><span class="type off">Document</span></div>
+            <div class="types" style="margin-top:6px"><span class="type on"><svg class="ic"><use href="#i-shield"/></svg> Dossier partagé</span><span class="type off"><svg class="ic"><use href="#i-eyeoff"/></svg> Ma note privée</span></div>
+        <div class="field"><label>Motif</label><input type="text" value="Contrôle tension" /></div>
+        <div class="field"><label>Constat</label><textarea style="height:52px">TA 138/88, en amélio</textarea></div>
+        <div class="suggest"><p class="sh">Suggestions (votre historique)</p><div class="si">TA 138/88, en amélioration. Poursuite du traitement.</div></div>
+        <div class="added"><p class="ah">Déjà ajouté à cette visite</p><p class="ai"><svg class="ic"><use href="#i-check"/></svg> Prescription · Amlodipine 5 mg renouvelée</p></div>
+        <div class="dactions"><div class="save">Ajouter la note</div><div class="close-btn">Clôturer</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="caption"><b>Consultation.</b> Encounter ouvert, saisie par type, aide fondée sur votre propre historique.</p>
+
+  <!-- 6. Préférences -->
+  <div class="sec"><span class="eyebrow"><span class="num">6</span> Préférences</span><h2>Mes préférences de saisie</h2><p class="lede">Vos listes personnelles pour saisir plus vite. Visibles de vous seul — jamais partagées.</p></div>
+  <div class="browser">
+    <div class="chrome"><div class="lights"><i style="background:#F0645C"></i><i style="background:#F5BE4F"></i><i style="background:#5BC466"></i></div><div class="url"><svg class="ic"><use href="#i-lock"/></svg> salama.mg/medecin/preferences</div></div>
+    <div class="appnav">
+      <div class="left"><div class="brand"><svg width="26" height="26"><use href="#logo"/></svg> Salama</div>
+        <div class="tabs"><a>Consultations</a><a class="on">Mes préférences</a></div></div>
+      <div class="doc"><span>Dr Rakoto</span><div class="av">DR</div></div>
+    </div>
+    <div class="pref">
+      <h3><svg class="ic" style="color:var(--emerald);width:18px;height:18px;vertical-align:-3px"><use href="#i-sliders"/></svg> Mes préférences de saisie</h3>
+      <p class="psub"><svg class="ic" style="width:14px;height:14px;vertical-align:-2px"><use href="#i-eyeoff"/></svg> Ces listes sont personnelles — visibles de vous seul, jamais partagées entre médecins.</p>
+      <div class="cats"><span class="cat on">Médicaments</span><span class="cat off">Diagnostics</span><span class="cat off">Motifs</span><span class="cat off">Symptômes</span><span class="cat off">Modèles</span></div>
+      <div class="addrow"><input type="text" placeholder="Ajouter un médicament (ex. Amoxicilline 500 mg)" /><div class="add">Ajouter</div></div>
+      <div class="srow"><span class="lbl">Amlodipine 5 mg</span><div class="right"><span class="badge sys">Système</span><span class="toggle"></span></div></div>
+      <div class="srow"><span class="lbl">Amoxicilline 500 mg</span><div class="right"><span class="badge perso">Ajouté par moi</span><span class="toggle"></span></div></div>
+      <div class="srow"><span class="lbl">Paracétamol 1 g</span><div class="right"><span class="badge learn">Appris</span><span class="toggle"></span></div></div>
+      <div class="srow"><span class="lbl">Métronidazole 250 mg</span><div class="right"><span class="badge perso">Ajouté par moi</span><span class="toggle off"></span></div></div>
+    </div>
+  </div>
+  <p class="caption"><b>Préférences.</b> Trois origines : fournie par le système, ajoutée par vous, ou apprise à l'usage. Confort de saisie — jamais une donnée patient.</p>
+
+  <!-- 7. Clôture -->
+  <div class="sec"><span class="eyebrow"><span class="num">7</span> Clôture</span><h2>Consultation clôturée</h2><p class="lede">Une fois clôturée, la consultation est historisée et rien ne peut être écrasé.</p></div>
+  <div class="browser">
+    <div class="chrome"><div class="lights"><i style="background:#F0645C"></i><i style="background:#F5BE4F"></i><i style="background:#5BC466"></i></div><div class="url"><svg class="ic"><use href="#i-lock"/></svg> salama.mg/medecin/consultation</div></div>
+    <div class="done">
+      <div class="circle"><svg class="ic"><use href="#i-check"/></svg></div>
+      <h3>Consultation clôturée</h3>
+      <p>Le dossier de Voahangy R. est à jour. L'accès à son dossier est refermé.</p>
+      <div class="summary">
+        <div class="sr"><svg class="ic"><use href="#i-note"/></svg> Note clinique · contrôle tension</div>
+        <div class="sr"><svg class="ic"><use href="#i-pill"/></svg> Prescription · Amlodipine 5 mg</div>
+        <div class="sr"><svg class="ic"><use href="#i-activity"/></svg> Mesure · TA 138/88</div>
+      </div>
+      <div class="btn" style="display:inline-block; padding:12px 26px">Terminer</div>
+    </div>
+  </div>
+  <p class="caption"><b>Clôture.</b> L'Encounter passe de « ouvert » à « clôturé » ; l'accès se referme.</p>
+
+  <div class="footer"><svg class="ic"><use href="#i-shield"/></svg> Interfaces médecin · Salama · maquettes de validation · données fictives.<br/><span style="display:inline-block;margin-top:8px">© 2026 Salama · Tous droits réservés · Développé par ERAK Consulting</span></div>
+
+</div>
+</body>
+</html>
